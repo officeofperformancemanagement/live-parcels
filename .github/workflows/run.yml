@@ -21,11 +21,11 @@ jobs:
 
       - uses: actions/setup-python@v4
 
-      - run: python3 run.py
-
       - run: python -m pip install -q --upgrade pip
 
       - run: pip install requests
+
+      - run: python3 run.py
 
       - run: git config --global --add safe.directory /__w/live-parcels/live-parcels      
 
