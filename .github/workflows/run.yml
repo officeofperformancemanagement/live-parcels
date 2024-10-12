@@ -21,9 +21,13 @@ jobs:
 
       # - uses: actions/setup-python@v4
 
-      - uses: actions/setup-node@v4
+      # - uses: actions/setup-node@v4
 
-      - run: apt-get update
+      - run: apt update
+
+      - run: apt install -y nodejs
+
+      - run: apt install -y npm
 
       # - run: apt install -y python3-pip
       
