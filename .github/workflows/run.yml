@@ -11,8 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # container:
-    #   image: ghcr.io/osgeo/gdal    
     permissions:
       contents: write
     name: download and save data
@@ -21,31 +19,7 @@ jobs:
 
       - uses: actions/setup-python@v4
 
-      - run: pip install esridump geopandas pyarrow
-
-      #- run: esri2geojson "https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1" "./live_parcels.geojson"
-
-      #- run: apt update
-
-      #- run: apt install gdal-bin
-      
-      # - run: apt update
-
-      # - run: apt install -y git
-
-      # - run: apt install -y nodejs
-
-      # - run: apt install -y npm
-
-      # - run: npm install -g esri-dump
-
-      # - run: esri-dump fetch https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1 > ./live_parcels.geojson
-
-      #- run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
-
-      #- run: rm live_parcels.geojson
-
-      #- run: ls
+      - run: pip install geopandas pyarrow
 
       - run: python run.py
 
