@@ -19,15 +19,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      # - uses: actions/setup-python@v4
+
+      - uses: actions/setup-node@v4
 
       - run: apt-get update
 
-      - run: apt install -y python3-pip
+      # - run: apt install -y python3-pip
       
-      - run: pip install requests
+      # - run: pip install requests
 
-      - run: python3 run.py
+      # - run: python3 run.py
+
+      - run: npm install -g esri-dump
+
+      - run: esri-dump fetch https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1 > live_parcels.geojson
 
       - run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
 
