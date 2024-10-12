@@ -1,7 +1,9 @@
 import json
 import math
-import requests
 import time
+
+import geopandas
+import requests
 
 #properties = ["ADDRESS", "DIRPFX", "STNUM", "STNAME", "TYPESFX"]
 properties = []
@@ -45,7 +47,14 @@ for i in range(num_pages):
 
         features.append(feature)
 
-feature_collection = {"type": "FeatureCollection", "features": features}
+    if i >= 2:
+      break
 
-with open("./live_parcels.geojson", "w") as f:
-    json.dump(feature_collection, f)
+# feature_collection = {"type": "FeatureCollection", "features": features}
+
+# with open("./live_parcels.geojson", "w") as f:
+#     json.dump(feature_collection, f)
+
+gdf = gpd.GeoDataFrame.from_features(features)
+gdf.set_crs(epsg=4326)
+gdf_projected.to_parquet(f'live_parcels.parquet')
