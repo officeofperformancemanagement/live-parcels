@@ -23,11 +23,11 @@ jobs:
 
       - run: pip install esridump geopandas
 
-      - run: esri2geojson "https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1" "./live_parcels.geojson"
+      #- run: esri2geojson "https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1" "./live_parcels.geojson"
 
-      - run: apt update
+      #- run: apt update
 
-      - run: apt install gdal-bin
+      #- run: apt install gdal-bin
       
       # - run: apt update
 
@@ -41,11 +41,11 @@ jobs:
 
       # - run: esri-dump fetch https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1 > ./live_parcels.geojson
 
-      - run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
+      #- run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
 
-      - run: rm live_parcels.geojson
+      #- run: rm live_parcels.geojson
 
-      - run: ls
+      #- run: ls
 
       - run: git config --global --add safe.directory $(realpath .)
 
