@@ -11,25 +11,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/osgeo/gdal    
+    # container:
+    #   image: ghcr.io/osgeo/gdal    
     permissions:
       contents: write
     name: download and save data
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+
+      - run: pip install esridump geopandas
+
+      - run: esri2geojson "https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1" "./live_parcels.geojson"
+
       - run: apt update
 
-      - run: apt install -y git
+      - run: apt install gdal-bin
+      
+      # - run: apt update
 
-      - run: apt install -y nodejs
+      # - run: apt install -y git
 
-      - run: apt install -y npm
+      # - run: apt install -y nodejs
 
-      - run: npm install -g esri-dump
+      # - run: apt install -y npm
 
-      - run: esri-dump fetch https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1 > ./live_parcels.geojson
+      # - run: npm install -g esri-dump
+
+      # - run: esri-dump fetch https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1 > ./live_parcels.geojson
 
       - run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
 
