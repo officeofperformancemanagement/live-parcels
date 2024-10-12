@@ -47,8 +47,8 @@ for i in range(num_pages):
                         trim_coord(coord)
 
         features.append(feature)
-  if i >= 2:
-    break
+    if i >= 2:
+      break
 
 featureCollection = { "type": "FeatureCollection", "features": features }
 
