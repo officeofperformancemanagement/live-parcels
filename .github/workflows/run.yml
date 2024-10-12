@@ -17,7 +17,9 @@ jobs:
       contents: write
     name: download and save data
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
+      
+      - run: git init
 
       - run: apt update
 
