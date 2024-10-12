@@ -47,7 +47,7 @@ for i in range(num_pages):
 
         features.append(feature)
 
-    if i >= 2:
+    if i >= 1:
       break
 
 # feature_collection = {"type": "FeatureCollection", "features": features}
@@ -57,4 +57,4 @@ for i in range(num_pages):
 
 gdf = gpd.GeoDataFrame.from_features(features)
 gdf.set_crs(epsg=4326)
-gdf_projected.to_parquet(f'live_parcels.parquet')
+gdf.to_parquet(f'live_parcels.parquet')
