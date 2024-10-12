@@ -47,6 +47,8 @@ jobs:
 
       #- run: ls
 
+      - run: python run.py
+
       - run: git config --global --add safe.directory $(realpath .)
 
       # Commit all changed files back to the repository
