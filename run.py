@@ -63,4 +63,4 @@ gdf.set_crs(epsg=4326)
 gdf.to_parquet(f'live_parcels.parquet')
 
 # save as gzipped csv
-df.to_csv(f"live_parcels.csv.gz", compression='gzip')
+gdf.to_csv(f"live_parcels.csv.gz", compression='gzip')
