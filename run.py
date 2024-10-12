@@ -1,6 +1,7 @@
 import json
 import math
 import time
+import zipfile
 
 import geopandas as gpd
 import requests
@@ -46,7 +47,20 @@ for i in range(num_pages):
                         trim_coord(coord)
 
         features.append(feature)
+  if i >= 2:
+    break
 
+featureCollection = { "type": "FeatureCollection", "features": features }
+
+# save zipped csv version
+with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
+    dumped = json.dumps(featureCollection, ensure_ascii=False, indent=4)
+    zip_file.writestr("live_parcels.geojson", data=dumped)
+  
+# save parquet version
 gdf = gpd.GeoDataFrame.from_features(features)
 gdf.set_crs(epsg=4326)
 gdf.to_parquet(f'live_parcels.parquet')
+
+# save as gzipped csv
+df.to_csv(f"live_parcels.csv.gz", compression='gzip')
