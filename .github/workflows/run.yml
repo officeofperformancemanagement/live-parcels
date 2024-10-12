@@ -21,7 +21,7 @@ jobs:
 
       - uses: actions/setup-python@v4
 
-      - run: sudo apt install python3-pip
+      - run: apt install python3-pip
 
       - run: pip install requests
 
