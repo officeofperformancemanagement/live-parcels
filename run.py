@@ -47,14 +47,6 @@ for i in range(num_pages):
 
         features.append(feature)
 
-    if i >= 1:
-      break
-
-# feature_collection = {"type": "FeatureCollection", "features": features}
-
-# with open("./live_parcels.geojson", "w") as f:
-#     json.dump(feature_collection, f)
-
 gdf = gpd.GeoDataFrame.from_features(features)
 gdf.set_crs(epsg=4326)
 gdf.to_parquet(f'live_parcels.parquet')
