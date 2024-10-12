@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/osgeo/gdal    
     permissions:
       contents: write
     name: download and save data
@@ -22,6 +24,10 @@ jobs:
       - run: pip install requests
 
       - run: python3 run.py
+
+      - run: ogr2ogr -f parquet live_parcels.parquet live_parcels.geojson
+
+      - run: rm live_parcels.geojson
 
       - run: git config --global --add safe.directory /__w/live-parcels/live-parcels      
 
