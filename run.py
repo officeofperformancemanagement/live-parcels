@@ -2,7 +2,7 @@ import json
 import math
 import time
 
-import geopandas
+import geopandas as gpd
 import requests
 
 #properties = ["ADDRESS", "DIRPFX", "STNUM", "STNAME", "TYPESFX"]
