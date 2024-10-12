@@ -39,7 +39,7 @@ jobs:
 
       - run: ls
 
-      - run: git config --global --add safe.directory /__w/live-parcels/live-parcels      
+      - run: git config --global --add safe.directory $(realpath .)
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v5
