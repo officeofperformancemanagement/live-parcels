@@ -23,6 +23,10 @@ jobs:
 
       - run: python run.py
 
+      - run: zip live_parcels.shp.zip live_parcels.cpg live_parcels.dbf live_parcels.shp live_parcels.shx
+
+      - run: rm live_parcels.cpg live_parcels.dbf live_parcels.shp live_parcels.shx
+
       - run: git config --global --add safe.directory $(realpath .)
 
       # Commit all changed files back to the repository
