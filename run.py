@@ -65,4 +65,4 @@ gdf.to_parquet("live_parcels.parquet")
 gdf.to_csv("live_parcels.csv.gz", compression='gzip')
 
 # save as shapefile
-gdf.to_file("live_parcels.shp.zip")
+gdf.to_file("live_parcels.shp")
