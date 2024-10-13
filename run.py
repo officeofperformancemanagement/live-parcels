@@ -20,7 +20,6 @@ count = requests.get(
 
 num_pages = math.ceil(count / 1000)
 print("number of pages:", num_pages)
-num_pages = 10
 
 def trim_coord(coord, num_digits=7):
     lon = str(coord[0])
