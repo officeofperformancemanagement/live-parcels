@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # every day at midnight
-    - cron: 0 0 * * *
+    # every month
+    - cron: 0 0 1 * *
 
 jobs:
   build:
