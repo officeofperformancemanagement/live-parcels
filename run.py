@@ -14,9 +14,15 @@ if properties:
 else:
   outFields = "*"
 
-count = requests.get(
+r = requests.get(
     "https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&having=&returnIdsOnly=true&returnCountOnly=true&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentOnly=false&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&f=json"
-).json()["count"]
+).json()
+
+if "count" not in r:
+  print(r)
+  raise Exception("missing count")
+
+count = r["count"]
 
 num_pages = math.ceil(count / 1000)
 print("number of pages:", num_pages)
