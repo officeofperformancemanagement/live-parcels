@@ -63,7 +63,7 @@ with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.Z
   
 # save parquet version
 gdf = gpd.GeoDataFrame.from_features(features)
-gdf.set_crs(epsg=4326)
+gdf = gdf.set_crs(epsg=4326)
 gdf.to_parquet("live_parcels.parquet")
 
 # save as gzipped csv
