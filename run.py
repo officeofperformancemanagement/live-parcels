@@ -56,11 +56,16 @@ for i in range(num_pages):
 
 featureCollection = { "type": "FeatureCollection", "features": features }
 
-# save zipped csv version
+# save zipped csv version without debugging for additional compression
+with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
+    dumped = json.dumps(featureCollection, ensure_ascii=False, indent=0)
+    zip_file.writestr("live_parcels.geojson", data=dumped)
+
+# save zipped csv version with indentation for debugging
 with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
     dumped = json.dumps(featureCollection, ensure_ascii=False, indent=4)
-    zip_file.writestr("live_parcels.geojson", data=dumped)
-  
+    zip_file.writestr("live_parcels.debug.geojson", data=dumped)
+
 # save parquet version
 gdf = gpd.GeoDataFrame.from_features(features)
 gdf = gdf.set_crs(epsg=4326)
