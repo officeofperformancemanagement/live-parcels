@@ -62,7 +62,7 @@ with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.Z
     zip_file.writestr("live_parcels.geojson", data=dumped)
 
 # save zipped csv version with indentation for debugging
-with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
+with zipfile.ZipFile("live_parcels.debug.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
     dumped = json.dumps(featureCollection, ensure_ascii=False, indent=4)
     zip_file.writestr("live_parcels.debug.geojson", data=dumped)
 
