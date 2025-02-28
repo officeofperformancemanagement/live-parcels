@@ -27,13 +27,38 @@ count = r["count"]
 num_pages = math.ceil(count / 1000)
 print("number of pages:", num_pages)
 
-def trim_coord(coord, num_digits=7):
-    lon = str(coord[0])
-    lat = str(coord[1])
-    if "." in lon and len(lon.split(".")[1]) > num_digits:
-        coord[0] = float(lon[: lon.index(".") + num_digits + 1])
-    if "." in lat and len(lat.split(".")[1]) > num_digits:
-        coord[1] = float(lat[: lat.index(".") + num_digits + 1])
+# inspired by https://github.com/danieljdufour/get-depth
+# determines how many nested levels are in a list
+# ex: an array of coordinate pairs [(x0, y0), (x1, y1)] has a depth of 2
+def get_depth(arr):
+    depth = 0
+    part = arr
+    while isinstance(part, list) or isinstance(part, tuple):
+        depth += 1
+        part = part[0]
+    return depth
+
+# remove unnecessary decimal points
+def trim_precision(it, num_digits=7):
+    depth = get_depth(it)
+    if isinstance(it, float):
+        return round(it, num_digits)
+    elif depth == 1:
+        return [trim_precision(n, num_digits) for n in it]
+    elif depth == 2 and len(it) == 2:
+        # line segment, so we need to preserve both the starting and end point
+        return [trim_precision(n, num_digits) for n in it]
+    elif depth == 2:
+        results = []
+        for i in it:
+            i = trim_precision(i, num_digits)
+            # don't add the trimmed result if it's the same as the preceding vertex point
+            if len(results) == 0 or i != results[-1]:
+                results.append(i)
+        return results
+    else:
+        # for polygons or multipolygons, recursively trim the containing rings of coordinates
+        return [trim_precision(n, num_digits) for n in it]
 
 features = []
 for i in range(num_pages):
@@ -42,15 +67,8 @@ for i in range(num_pages):
     url = f"https://mapsdev.hamiltontn.gov/hcwa03/rest/services/Live_Parcels/MapServer/1/query?where=1%3D1&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&outFields={outFields}&resultOffset={(i * 1000)}&returnGeometry=true&returnTrueCurves=false&returnIdsOnly=false&returnCountOnly=false&returnZ=false&returnM=false&returnDistinctValues=false&returnExtentOnly=false&f=geojson"
     for feature in requests.get(url).json()["features"]:
         geometry = feature["geometry"]
-        if geometry["type"] == "Polygon":
-            for ring in geometry["coordinates"]:
-                for coord in ring:
-                    trim_coord(coord)
-        elif geometry["type"] == "MultiPolygon":
-            for polygon in geometry["coordinates"]:
-                for ring in polygon:
-                    for coord in ring:
-                        trim_coord(coord)
+
+        geometry['coordinates'] = trim_precision(geometry["coordinates"])
 
         features.append(feature)
 
