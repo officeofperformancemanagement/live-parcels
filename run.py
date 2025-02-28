@@ -58,7 +58,7 @@ featureCollection = { "type": "FeatureCollection", "features": features }
 
 # save zipped csv version without debugging for additional compression
 with zipfile.ZipFile("live_parcels.geojson.zip", mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file: 
-    dumped = json.dumps(featureCollection, ensure_ascii=False, indent=0)
+    dumped = json.dumps(featureCollection, ensure_ascii=False)
     zip_file.writestr("live_parcels.geojson", data=dumped)
 
 # save zipped csv version with indentation for debugging
